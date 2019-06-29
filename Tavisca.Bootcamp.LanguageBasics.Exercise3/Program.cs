@@ -42,12 +42,12 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
         public static int[] SelectMeals(int[] protein, int[] carbs, int[] fat, string[] dietPlans)
         {
 
-            int[] tcal = new int[protein.Length];
+            int[] totalCalories = new int[protein.Length];
             int[] result = new int[dietPlans.Length];
 
             for(int i=0; i<protein.Length; i++)
             {
-                tcal[i] = protein[i]* 5 + carbs[i]* 5 + fat[i]* 9;
+                totalCalories[i] = protein[i]* 5 + carbs[i]* 5 + fat[i]* 9;
             }
 
             for(int i=0; i<dietPlans.Length; i++)
@@ -59,7 +59,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                 else
                 {
                     List<int> indexes = new List<int>();
-                    result[i] = findres(protein, carbs, fat, tcal, dietPlans[i], indexes);
+                    result[i] = FindResult(protein, carbs, fat, totalCalories, dietPlans[i], indexes);
                 }
             }
 
@@ -68,86 +68,86 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             throw new NotImplementedException();
         }
 
-        public static int findres(int[] protein, int[] carbs, int[] fat, int[] tcal, string dietPlan, List<int> indexes)
+        public static int FindResult(int[] protein, int[] carbs, int[] fat, int[] totalCalories, string dietPlan, List<int> indexes)
         {
             if(dietPlan.Length > 0)
             {
                 switch (dietPlan[0])
                 {
-                    case 'P' :  indexes = maxIndexes(protein, indexes);
+                    case 'P' :  indexes = SearchMaxIndexes(protein, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'p':   indexes = minIndexes(protein, indexes);
+                    case 'p':   indexes = SearchMinIndexes(protein, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'C':   indexes = maxIndexes(carbs, indexes);
+                    case 'C':   indexes = SearchMaxIndexes(carbs, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'c':   indexes = minIndexes(carbs, indexes);
+                    case 'c':   indexes = SearchMinIndexes(carbs, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'F':   indexes = maxIndexes(fat, indexes);
+                    case 'F':   indexes = SearchMaxIndexes(fat, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'f':   indexes = minIndexes(fat, indexes);
+                    case 'f':   indexes = SearchMinIndexes(fat, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 'T':  indexes = maxIndexes(tcal, indexes);
+                    case 'T':  indexes = SearchMaxIndexes(totalCalories, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
                             return indexes[0];
                         }
 
-                    case 't':   indexes = minIndexes(tcal, indexes);
+                    case 't':   indexes = SearchMinIndexes(totalCalories, indexes);
                         if (indexes.Count > 1)
                         {
-                            return findres(protein, carbs, fat, tcal, dietPlan.Substring(1), indexes);
+                            return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
                         }
                         else
                         {
@@ -164,80 +164,80 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             throw new NotImplementedException();
         }
 
-        public static List<int> maxIndexes(int[] nutri, List<int> indexes)
+        public static List<int> SearchMaxIndexes(int[] nutrient, List<int> indexes)
         {
             int max;
             
-            List<int> indexesb = new List<int>();
+            List<int> indexes_updated = new List<int>();
 
             if(indexes.Count > 0)
             {
-                max = nutri[indexes[0]];
+                max = nutrient[indexes[0]];
                 foreach(int i in indexes)
                 {
-                    if (max < nutri[i])
-                        max = nutri[i];
+                    if (max < nutrient[i])
+                        max = nutrient[i];
                 }
 
                 foreach (int i in indexes)
-                    if (max == nutri[i])
-                        indexesb.Add(i);
+                    if (max == nutrient[i])
+                        indexes_updated.Add(i);
             }
             else
             {
-                max = nutri[0];
-                for(int i=1; i<nutri.Length; i++)
+                max = nutrient[0];
+                for(int i=1; i< nutrient.Length; i++)
                 {
-                    if(max < nutri[i])
-                        max = nutri[i];
+                    if(max < nutrient[i])
+                        max = nutrient[i];
                 }
 
-                for (int i = 0; i < nutri.Length; i++)
+                for (int i = 0; i < nutrient.Length; i++)
                 {
-                    if (max == nutri[i])
-                        indexesb.Add(i);
+                    if (max == nutrient[i])
+                        indexes_updated.Add(i);
                 }
             }
 
-            return indexesb;
+            return indexes_updated;
         }
 
-        public static List<int> minIndexes(int[] nutri, List<int> indexes)
+        public static List<int> SearchMinIndexes(int[] nutrient, List<int> indexes)
         {
             int min;
 
-            List<int> indexesb = new List<int>();
+            List<int> indexes_updated = new List<int>();
 
             if (indexes.Count > 0)
             {
-                min = nutri[indexes[0]];
+                min = nutrient[indexes[0]];
                 foreach (int i in indexes)
                 {
-                    if (min > nutri[i])
-                        min = nutri[i];
+                    if (min > nutrient[i])
+                        min = nutrient[i];
                 }
 
                 foreach (int i in indexes)
-                    if (min == nutri[i])
-                        indexesb.Add(i);
+                    if (min == nutrient[i])
+                        indexes_updated.Add(i);
             }
             else
             {
-                min = nutri[0];
-                for (int i = 1; i < nutri.Length; i++)
+                min = nutrient[0];
+                for (int i = 1; i < nutrient.Length; i++)
                 {
-                    if (min > nutri[i])
-                        min = nutri[i];
+                    if (min > nutrient[i])
+                        min = nutrient[i];
                 }
 
-                for (int i = 0; i < nutri.Length; i++)
+                for (int i = 0; i < nutrient.Length; i++)
                 {
-                    if (min == nutri[i])
-                        indexesb.Add(i);
+                    if (min == nutrient[i])
+                        indexes_updated.Add(i);
                 }
             }
 
-            return indexesb;
+            return indexes_updated;
         }
     }
 }
