@@ -45,9 +45,12 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             int[] totalCalories = new int[protein.Length];
             int[] result = new int[dietPlans.Length];
 
-            for(int i=0; i<protein.Length; i++)
+            const int FIVE = 5;
+            const int NINE = 5;
+
+            for (int i=0; i<protein.Length; i++)
             {
-                totalCalories[i] = protein[i]* 5 + carbs[i]* 5 + fat[i]* 9;
+                totalCalories[i] = protein[i]* FIVE + carbs[i]* FIVE + fat[i]* NINE;
             }
 
             for(int i=0; i<dietPlans.Length; i++)
@@ -70,11 +73,23 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
 
         public static int FindResult(int[] protein, int[] carbs, int[] fat, int[] totalCalories, string dietPlan, List<int> indexes)
         {
-            if(dietPlan.Length > 0)
+            const char HIGH_PROTEIN = 'P';
+            const char LOW_PROTEIN = 'p';
+
+            const char HIGH_CARBS = 'C';
+            const char LOW_CARBS = 'c';
+
+            const char HIGH_FAT = 'F';
+            const char LOW_FAT = 'f';
+
+            const char HIGH_TOTAL_CALORIES = 'T';
+            const char LOW_TOTAL_CALORIES = 't';
+
+            if (dietPlan.Length > 0)
             {
                 switch (dietPlan[0])
                 {
-                    case 'P' :  indexes = SearchMaxIndexes(protein, indexes);
+                    case HIGH_PROTEIN:  indexes = SearchMaxIndexes(protein, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -84,7 +99,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'p':   indexes = SearchMinIndexes(protein, indexes);
+                    case LOW_PROTEIN:  indexes = SearchMinIndexes(protein, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -94,7 +109,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'C':   indexes = SearchMaxIndexes(carbs, indexes);
+                    case HIGH_CARBS:   indexes = SearchMaxIndexes(carbs, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -104,7 +119,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'c':   indexes = SearchMinIndexes(carbs, indexes);
+                    case LOW_CARBS:   indexes = SearchMinIndexes(carbs, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -114,7 +129,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'F':   indexes = SearchMaxIndexes(fat, indexes);
+                    case HIGH_FAT:   indexes = SearchMaxIndexes(fat, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -124,7 +139,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'f':   indexes = SearchMinIndexes(fat, indexes);
+                    case LOW_FAT:   indexes = SearchMinIndexes(fat, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -134,7 +149,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 'T':  indexes = SearchMaxIndexes(totalCalories, indexes);
+                    case HIGH_TOTAL_CALORIES:  indexes = SearchMaxIndexes(totalCalories, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -144,7 +159,7 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
                             return indexes[0];
                         }
 
-                    case 't':   indexes = SearchMinIndexes(totalCalories, indexes);
+                    case LOW_TOTAL_CALORIES:   indexes = SearchMinIndexes(totalCalories, indexes);
                         if (indexes.Count > 1)
                         {
                             return FindResult(protein, carbs, fat, totalCalories, dietPlan.Substring(1), indexes);
@@ -161,7 +176,6 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             }
 
             return 0;
-            throw new NotImplementedException();
         }
 
         public static List<int> SearchMaxIndexes(int[] nutrient, List<int> indexes)
@@ -173,15 +187,15 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             if(indexes.Count > 0)
             {
                 max = nutrient[indexes[0]];
-                foreach(int i in indexes)
+                foreach(int index in indexes)
                 {
-                    if (max < nutrient[i])
-                        max = nutrient[i];
+                    if (max < nutrient[index])
+                        max = nutrient[index];
                 }
 
-                foreach (int i in indexes)
-                    if (max == nutrient[i])
-                        indexes_updated.Add(i);
+                foreach (int index in indexes)
+                    if (max == nutrient[index])
+                        indexes_updated.Add(index);
             }
             else
             {
@@ -211,15 +225,15 @@ namespace Tavisca.Bootcamp.LanguageBasics.Exercise1
             if (indexes.Count > 0)
             {
                 min = nutrient[indexes[0]];
-                foreach (int i in indexes)
+                foreach (int index in indexes)
                 {
-                    if (min > nutrient[i])
-                        min = nutrient[i];
+                    if (min > nutrient[index])
+                        min = nutrient[index];
                 }
 
-                foreach (int i in indexes)
-                    if (min == nutrient[i])
-                        indexes_updated.Add(i);
+                foreach (int index in indexes)
+                    if (min == nutrient[index])
+                        indexes_updated.Add(index);
             }
             else
             {
